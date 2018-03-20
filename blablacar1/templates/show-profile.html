@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} Voir le profil{% endblock %}
+
+
+{% block content %}
+<h1> Voir le profil de {{user_to_show.username}}</h1>
+<ul>
+	<li><b>Username</b> : {{ user_to_show.username }}</li>
+	<li>... Ajouter les champs relatif à ce user ...</li>
+</ul>
+
+{% if current_user == user_to_show %}
+	<h2>Mes réservations</h2>
+	{% for booking in current_user.booking_set.all %}
+		- de {{ booking.trajet.ville_depart }} à {{ booking.trajet.ville_arrivee }} - {{ booking.trajet.date_depart|date:'d/m/y'}} --> <a href="/evaluer-conducteur?trajet_id={{booking.trajet.id}}">Evaluer le conducteur</a><br>
+	{% endfor %}
+	
+	<h2>Mes trajets</h2>
+	{% for trajet in current_user.trajet_set.all %}
+		- de {{ trajet.ville_depart }} à {{ trajet.ville_arrivee }} - {{trajet.date_depart|date:'d/m/y'}} --> <a href="">Evaluer les passagers</a><br>
+	{% endfor %}
+{% endif %}
+
+<p>
+	<a href="/bienvenue">Retour à la page d'accueil</a>
+</p>
+{% endblock %}
+

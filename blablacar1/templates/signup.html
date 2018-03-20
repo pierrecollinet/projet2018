@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %} Se créer un compte{% endblock %}
+
+
+{% block content %}
+<h1> Se créer un compte</h1>
+
+<form>
+
+
+<ul>
+	{% for error in mes_erreurs %}
+		<li class="error">{{ error }}</li>
+	{% endfor %}
+</ul>
+<p>
+	<label>Nom d'utilisateur</label>
+	<input type="text" name="username">
+</p>
+<p>
+	<label>Password</label>
+	<input type="password" name="password1">
+</p>
+<p>
+	<label>Réintroduis ton password</label>
+	<input type="password" name="password2">
+</p>
+<p>
+	<input type="submit" value="Se créer un compte">
+</p>
+
+</form>
+{% endblock %}

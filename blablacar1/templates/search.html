@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %} Chercher un trajet{% endblock %}
+
+
+{% block content %}
+<h1>Chercher un trajet</h1>
+<form action="" method="get">
+
+	<p>
+		<label>Date de départ</label>
+		<input type="date" name="date_depart">
+	</p>
+	<p>
+		<label>Heure de départ</label>
+		<input type="time" name="heure_depart">
+	</p>
+	<p>
+		<label>Ville de départ</label>
+		<input type="text" name="ville_depart">
+	</p>
+	<p>
+		<label>Ville d'arrivée</label>
+		<input type="text" name="ville_arrivee">
+	</p>
+	<p>
+		<label>Nombre de personnes</label>
+		<select name="capacite">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select>
+	</p>
+	<p>
+		<input type="submit" value="Chercher">
+	</p>
+
+</form>
+
+<section class="result-search">
+	<h2>Résultats de votre recherche</h2>
+	<ul>
+		{% for error in mes_erreurs %}
+			<li class="error">{{ error }}</li>
+		{% endfor %}
+	</ul>	
+	{% if trajets|length == 0 %}
+		Aucun résultats ne correspond à votre recherche
+	{% else %}
+		{% for trajet in trajets %}
+		<div class="trajet">
+			<b>Ville de départ</b> : {{ trajet.ville_depart }} <br>
+			<b>Ville d'arrivée</b> : {{ trajet.ville_arrivee }} <br>
+			<b>Date de départ</b> : {{ trajet.date_depart|date:"d/m/Y" }} <br>
+			<b>Heure de départ</b> : {{ trajet.heure_depart|date:'H:i' }} <br>
+			<b>Capacité max</b> : {{ trajet.capacite }} <br>
+			<b>Prix par personne</b> : {{ trajet.prix_par_personne }} Eur/h<br>
+			<b>Conducteur</b> : <a href="/profil?user_id={{trajet.conducteur.id}}">{{ trajet.conducteur }}</a> <br>
+			<a href="/book?trajet_id={{trajet.id}}"><button>Réserver</button></a>
+		</div>
+		{% endfor %}
+	{% endif %}
+</section>
+{% endblock %}
+
+
+
+    capacite = models.PositiveSmallIntegerField()
+    prix_par_personne = models.CharField(max_length=100)
+    conducteur = models.ForeignKey(Utilisateur)
+    marque_voiture = models.CharField(max_length=100, blank=True,null=True)
+    

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %} Bienvenue{% endblock %}
+
+
+{% block content %}
+<div class="welcome-main">
+	<div class="welcome-main-content">
+		<h1>Emma. Blabla. Maman</h1>
+		<form action="/search" method="" class="search-form">
+			<input type="text" name="ville_depart" placeholder="Départ">
+			<input type="text" name="ville_arrivee" placeholder="Destination">
+			<input type="date" name="date_depart" placeholder="Date">
+			<input type="submit" value="Chercher un trajet" class="submit-btn">
+		</form>
+	</div>
+</div>
+{% endblock %}

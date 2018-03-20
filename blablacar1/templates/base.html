@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" >
+    <head>
+      <title>{% block title %} {% endblock %}</title>
+	  <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+    </head>
+
+    <body>
+    	
+      <header>
+      	{% if current_user %}
+      		<a href="/logout">Se déconnecter</a>
+      		<a href="/profil?user_id={{current_user.id}}">Voir mon profil</a>
+      		<a href="/nouveau-trajet"><button class="submit-btn">Proposer un trajet</button></a>
+      	{% else %}
+	        <a href="/login">Se connecter</a>
+	        <a href="/signup">Se créer un compte</a>
+        {% endif %}
+        
+      </header>
+
+      <div class="center">
+        {% block content %}
+        {% endblock %}
+      </div>
+
+      <footer>
+		<p>
+		<a href="/nouveau-trajet">Proposer un trajet</a>
+		</p>
+		<p>
+		<a href="/search">Chercher un trajet</a>
+		</p>
+        @developed by students from Solvay2018
+      </footer>
+
+    </body>
+<html>
