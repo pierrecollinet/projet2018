@@ -109,6 +109,7 @@ def login(request):
 
 import datetime
 def nouveau_trajet(request):
+    villes = Ville.objects.all()
     user_id = request.session['user_id']
     current_user = Utilisateur.objects.get(id=user_id)
     errors =[]
@@ -142,7 +143,7 @@ def nouveau_trajet(request):
             new_trajet.save()
             # On redirige vers la welcome page
             return HttpResponseRedirect('/bienvenue')
-    return render(request,'nouveau-trajet.html', {'mes_erreurs':errors, "today":today, 'current_user':current_user})
+    return render(request,'nouveau-trajet.html', {'villes':villes,'mes_erreurs':errors, "today":today, 'current_user':current_user})
 
 def show_profile(request):
     user = get_logged_user(request)
