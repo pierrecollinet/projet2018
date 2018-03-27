@@ -313,7 +313,7 @@ def chat_solvay(request):
             if form_valid :
                 new_message = Message(message=message, auteur=current_user)
                 new_message.save()
-        if len(Message.objects.filter(auteur=current_user)) > 0 and current_user.like == False :
+        if len(Message.objects.filter(auteur=current_user)) > 1 and current_user.like == False :
             show_modal = True
         else : 
             show_modal = False
