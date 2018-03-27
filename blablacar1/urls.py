@@ -54,9 +54,6 @@ from django.views.static import serve as staticserve
 urlpatterns += ('',
         (r'^static/(?P<path>.*)$', staticserve,
             {'document_root': os.path.join(os.path.dirname(__file__), 'static')} ),
-        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
-            'document_root': settings.MEDIA_ROOT,
-        })
         )
     
     
