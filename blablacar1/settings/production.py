@@ -115,6 +115,9 @@ DATE_INPUT_FORMATS = ['%d-%m-%Y']
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media")
+MEDIA_URL = "/media/"
+
 STATIC_ROOT = os.path.join(os.getcwd(), "staticfiles")
 STATIC_URL = '/static/'
 
