@@ -118,8 +118,7 @@ DATE_INPUT_FORMATS = ['%d-%m-%Y']
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 STATIC_URL = '/static/'
-STATIC_URL = '/static/'
-STATIC_ROOT = STATIC_URL = '/static/'
+STATIC_ROOT = 'static/'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
