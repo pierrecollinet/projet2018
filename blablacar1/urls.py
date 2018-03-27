@@ -38,23 +38,23 @@ urlpatterns = [
     url(r'^book/$', book),
     url(r'^voir-profil/$', voir_profil),
     url(r'^evaluer-conducteur/$', evaluer_conducteur),
-    
+
     url(r'^admin/', include(admin.site.urls)),
-    
-] 
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-urlpatterns += staticfiles_urlpatterns()
-urlpatterns += (r'^static/(?P.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
+]
+# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# 
+# urlpatterns += staticfiles_urlpatterns()
+# urlpatterns += (r'^static/(?P.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
+# 
+# from django.conf import settings
+# import os
+# from django.views.static import serve as staticserve
+# 
+# urlpatterns += ('',
+#         (r'^static/(?P<path>.*)$', staticserve,
+#             {'document_root': os.path.join(os.path.dirname(__file__), 'static')} ),
+#         )
+# 
 
-from django.conf import settings
-import os
-from django.views.static import serve as staticserve
-
-urlpatterns += ('',
-        (r'^static/(?P<path>.*)$', staticserve,
-            {'document_root': os.path.join(os.path.dirname(__file__), 'static')} ),
-        )
-    
-    
 
