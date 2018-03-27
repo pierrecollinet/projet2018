@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %} Voir le profil{% endblock %}
+
+
+{% block content %}
+<h1> Voir le profil</h1>
+<p>
+	<a href="/modifier-profil">Modifier mon profil</a>
+</p>
+<p>
+Prénom : {{user_to_show.prenom}}
+</p>
+<p>
+Nom : {{user_to_show.nom}}
+</p>
+
+<h2>Mes statistiques</h2>
+<h3>Mes trajets</h3>
+{% for trajet in user_to_show.trajet_set.all %}
+	- {{ trajet.ville_depart }} à  {{ trajet.ville_arrivee }} - {{ trajet.date_depart|date:"d/m/Y" }}<br>
+{% endfor %}
+<h3>Les trajets auxquels j'ai participé (passager)</h3>
+{% for my_booking in user_to_show.booking_set.all %}
+	- {{ my_booking.trajet.ville_depart}} à  {{ my_booking.trajet.ville_arrivee }} - {{ my_booking.trajet.date_depart|date:"d/m/Y" }}<br>
+{% endfor %}
+{% endblock %}

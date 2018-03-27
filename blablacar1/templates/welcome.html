@@ -8,8 +8,20 @@
 	<div class="welcome-main-content">
 		<h1>Emma. Blabla. Maman</h1>
 		<form action="/search" method="" class="search-form">
-			<input type="text" name="ville_depart" placeholder="Départ">
-			<input type="text" name="ville_arrivee" placeholder="Destination">
+			DE 
+			<select name="ville_depart">
+					<option value="disabled" selected disabled>Ville de départ</option>
+				{% for ville in villes %}
+					<option value="{{ville.id}}" >{{ ville }}</option>
+				{% endfor %}
+			</select>
+			A
+			<select name="ville_arrivee">
+					<option selected disabled>Ville d'arrivée</option>
+				{% for ville in villes %}
+					<option value="{{ville.id}}" >{{ ville }}</option>
+				{% endfor %}
+			</select>
 			<input type="date" name="date_depart" placeholder="Date">
 			<input type="submit" value="Chercher un trajet" class="submit-btn">
 		</form>

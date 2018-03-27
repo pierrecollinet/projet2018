@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from views import bienvenue, signup, login, nouveau_trajet, logout, show_profile, search, book, evaluer_conducteur
+from views import bienvenue, signup, login, nouveau_trajet, logout, show_profile, search, book, evaluer_conducteur, modify_profile, voir_profil
 
 urlpatterns = [
     url(r'^$', bienvenue),
@@ -28,7 +28,9 @@ urlpatterns = [
     url(r'^profil/$', show_profile),
     url(r'^nouveau-trajet/$', nouveau_trajet),
     url(r'^search/$', search),
+    url(r'^modifier-profil/$', modify_profile),
     url(r'^book/$', book),
+    url(r'^voir-profil/$', voir_profil),
     url(r'^evaluer-conducteur/$', evaluer_conducteur),
     
     url(r'^admin/', include(admin.site.urls)),

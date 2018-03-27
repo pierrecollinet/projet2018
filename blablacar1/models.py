@@ -4,23 +4,32 @@ from django.db import models
 
 class Utilisateur(models.Model):
     username = models.CharField(max_length=100)
+    prenom = models.CharField(max_length=100, blank = True, null = True)
+    nom = models.CharField(max_length=100, blank = True, null = True)
     password = models.CharField(max_length=100)
 
     def __str__(self):
         return self.username
 
+class Ville(models.Model):
+    nom = models.CharField(max_length=100)
+    code_postal = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.nom
+    
 class Trajet(models.Model):
     date_depart = models.DateField(blank=True,null=True)
     heure_depart = models.TimeField(blank=True,null=True)
-    ville_depart = models.CharField(max_length=100)
-    ville_arrivee = models.CharField(max_length=100)
+    ville_depart = models.ForeignKey(Ville,blank=True,null=True, related_name = "ville_depart")
+    ville_arrivee = models.ForeignKey(Ville,blank=True,null=True, related_name = "ville_arrivee")
     capacite = models.PositiveSmallIntegerField()
     prix_par_personne = models.CharField(max_length=100)
     conducteur = models.ForeignKey(Utilisateur)
     marque_voiture = models.CharField(max_length=100, blank=True,null=True)
     
     def __str__(self):
-        return self.ville_depart + ' a ' + self.ville_arrivee    
+        return self.ville_depart.nom + ' a ' + self.ville_arrivee.nom    
     
 class Booking(models.Model):
     trajet = models.ForeignKey(Trajet)

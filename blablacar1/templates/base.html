@@ -11,7 +11,7 @@
       <header>
       	{% if current_user %}
       		<a href="/logout">Se déconnecter</a>
-      		<a href="/profil?user_id={{current_user.id}}">Voir mon profil</a>
+      		<a href="/voir-profil?user_id={{current_user.id}}&param=coucou">Voir mon profil</a>
       		<a href="/nouveau-trajet"><button class="submit-btn">Proposer un trajet</button></a>
       	{% else %}
 	        <a href="/login">Se connecter</a>

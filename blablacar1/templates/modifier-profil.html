@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %} Modifier profil{% endblock %}
+
+
+{% block content %}
+<h1> Modifier profil</h1>
+
+<form action="" method="post">
+{% csrf_token %}
+<p>
+	<label>Prénom : </label>
+	<input type="text" name="prenom" value="{% if current_user.prenom %}{{current_user.prenom}}{% endif %}">
+</p>
+
+<p>
+	<label>Nom : </label>
+	<input type="text" name="nom" value="{{current_user.nom}}">
+</p>
+
+<p>
+	<input type="submit">
+</p>
+</form>
+{% endblock %}
+
+

@@ -4,7 +4,8 @@ from django.shortcuts import render_to_response
 from django.http.response import HttpResponseRedirect
 from django.template import RequestContext
 
-from blablacar1.models import Utilisateur, Trajet, Booking, RatingConducteur
+from blablacar1.models import Utilisateur, Trajet, Booking, RatingConducteur, Ville
+from datetime import date
 
 def get_logged_user(request):
     if "user_id" in request.session : 
@@ -60,13 +61,17 @@ def signup(request):
                 
                 # B. Rediriger vers la page de login
                 return HttpResponseRedirect("/login")
+            else : 
+                return render_to_response('signup.html', {'mes_erreurs':errors, 'username':username, 'password1':password1})  
         # 3. Sinon, recharger la même page
         return render_to_response('signup.html', {'mes_erreurs':errors})        
 
 def bienvenue(request):
-    if "user_id" in request.session : 
+    if "user_id" in request.session :
+        # On va "chercher" toutes les villes pour les mettre dans le champ "ville" du formulaire (select button)
+        villes = Ville.objects.all() 
         user = Utilisateur.objects.get(id=request.session["user_id"])
-        return render_to_response('welcome.html', {'current_user':user})
+        return render_to_response('welcome.html', {'current_user':user, 'villes':villes})
     else : 
         return HttpResponseRedirect('/login')
    
@@ -153,74 +158,79 @@ def search(request):
     if user :
         # Initialement on affiche tous les résultats
         trajets = Trajet.objects.all()
-        # Si l'utilisateur clique sur "chercher"
-        if request.GET : 
-            date_depart       = request.GET['date_depart']
-            ville_depart      = request.GET['ville_depart']
-            ville_arrivee     = request.GET['ville_arrivee']
-            if "heure_depart" in request.GET : 
-                heure_depart = request.GET['heure_depart']
-            else : 
-                heure_depart = ""
-            if "capacite" in request.GET : 
-                capacite = request.GET['capacite']
-            else:
-                capacite = ""
+        # On passe toutes les villes au template pour le champ "select" ville départ et arrivée
+        villes = Ville.objects.all()
+        # si l'utilisateur clique sur chercher
+        if request.GET :
+            if 'ville_depart' in request.GET : 
+                ville_de_depart_id = request.GET['ville_depart']
+                ville_de_depart = Ville.objects.get(id=ville_de_depart_id)
+                if ville_de_depart != "":
+                    trajets = trajets.filter(ville_depart=ville_de_depart)
+            if 'ville_arrivee' in request.GET : 
+                ville_arrivee_id = request.GET['ville_arrivee']
+                ville_arrivee = Ville.objects.get(id=ville_arrivee_id)
+                if ville_arrivee != "":
+                    trajets = trajets.filter(ville_arrivee=ville_arrivee)
             
-            # Si le champs n'est pas vide, c'est que l'utilisateur l'a complété et souhaite filtrer ce champ
-            if date_depart != "":
-                trajets = trajets.filter(date_depart = date_depart)
-            if heure_depart != "":
-                trajets = trajets.filter(heure_depart = heure_depart)
-            if ville_depart != "":
-                trajets = trajets.filter(ville_depart = ville_depart)
-            if ville_arrivee != "":
-                trajets = trajets.filter(ville_arrivee = ville_arrivee)
-            if capacite != "":
-                # Il faut une voiture pouvant accueillir AU MOINS le nombre de places demandées
-                trajets = trajets.filter(capacite__gte = capacite)
-        return render_to_response('search.html', {'current_user':user, 'trajets':trajets}, context_instance=RequestContext(request))
+            if 'heure_depart' in request.GET : 
+                heure_depart = request.GET['heure_depart']
+                if heure_depart != "" : 
+                    trajets = trajets.filter(heure_depart=heure_depart)
+            if 'date_depart' in request.GET : 
+                date_depart  = request.GET['date_depart']
+                if date_depart != "":
+                    trajets = trajets.filter(date_depart=date_depart)
+              
+            if 'capacite' in request.GET : 
+                capacite =  request.GET['capacite']
+                if capacite != "":
+                    trajets = trajets.filter(capacite__gte = capacite)
+        return render_to_response('search.html', {'current_user':user, 'trajets':trajets, 'villes':villes}, context_instance=RequestContext(request))
     else : 
         return HttpResponseRedirect('/login')
 
 def book(request):
     user = get_logged_user(request)
     errors = []
+    trajets = Trajet.objects.all()
+    today = date.today()
     if user :
-        # Si l'utilisateur clique sur "réserver"
-        if request.GET :
-            form_valid = True
-            trajet_id = request.GET['trajet_id']
-            trajet = Trajet.objects.get(id=trajet_id)
-            # On récupère les réservations déjà existantes de ce trajet
-            bookings = Booking.objects.filter(trajet=trajet)
-            if len(bookings) >= trajet.capacite : 
-                form_valid = False
-                error = "Désolé mais ce trajet est déjà complet"
-                errors.append(error)
-                trajets = Trajet.objects.all()
-            # On vérifie que l'utilisateur n'a pas déjà réservé ce trajet
-            if len(Booking.objects.filter(passager=user)) > 0 : 
-                form_valid = False
-                error = "Tu as déjà effectué une réservation pour ce trajet"
-                errors.append(error)
-                trajets = Trajet.objects.all()   
-            # On vérifie que l'utilisateur n'essaie pas de réserver SON PROPRE TRAJET
-            if trajet.conducteur == user : 
-                form_valid = False
-                error = "Tu ne peux pas réserver ce trajet puisque c'est toi le conducteur"
-                errors.append(error)
-                trajets = Trajet.objects.all()            
-            if form_valid : 
-                new_booking = Booking(
-                                    trajet = trajet,
-                                    passager = user
-                                    )
-                new_booking.save()
-            else : 
-                return render_to_response('search.html', {'current_user':user, 'trajets':trajets, 'mes_erreurs':errors}, context_instance=RequestContext(request))
-                
-        return HttpResponseRedirect('/profil?user_id='+str(user.id))
+        form_valid = True
+        trajet_id = request.GET['trajet_id']
+        trajet = Trajet.objects.get(id = trajet_id)
+        # 1°. Vérifier que le formulaire est valide
+        # A. Vérifier qu'il y a de la place
+        nombre_de_places_initiales = trajet.capacite
+        reservation_de_ce_trajet = Booking.objects.filter(trajet=trajet)
+        nombre_de_places_deja_reservees = len(reservation_de_ce_trajet)
+        # B. Vérifier qu'il n'est pas conducteur
+        if nombre_de_places_deja_reservees >= nombre_de_places_initiales : 
+            error = "Tu ne peux pas réserver, il n'y a plus de places"
+            errors.append(error)
+            form_valid = False
+        if trajet.conducteur == user : 
+            error = "Tu ne peux pas réserver puisque tu es déjà conducteur"
+            errors.append(error)
+            form_valid = False
+        # C. Vérifier que le trajet n'est pas déjà passé
+        if trajet.date_depart <= today : 
+            error = "Tu ne peux pas réserver dans le passé"
+            errors.append(error)
+            form_valid = False
+        # 2°. Si le trajet est valide : 
+        if form_valid : 
+            new_booking = Booking(
+                                trajet = trajet,
+                                passager = user
+                                )
+            new_booking.save()
+            return HttpResponseRedirect('/voir-profil?user_id='+str(user.id))
+        # 3°. Si il n'est pas valide --> message d'erreur et redirect vers booking page
+        else : 
+            return render_to_response('search.html', {'current_user':user, 'trajets':trajets, 'mes_erreurs':errors}, context_instance=RequestContext(request))
+        # 3°. Si le formulaire est valide --> On crée une nouvelle reservation dans la DB et redirect vers ma profile page
+        
     else : 
         return HttpResponseRedirect('/login')
     
@@ -257,5 +267,26 @@ def evaluer_conducteur(request):
     else : 
         return HttpResponseRedirect('/login')    
     
-    
+def modify_profile(request):
+    user_id = request.session['user_id']
+    user = Utilisateur.objects.get(id=user_id)
+    if user : 
+        # si l'utilisateur clique sur valider
+        if request.POST : 
+            # Valider les champs de formulaires
+            # ...
+            prenom = request.POST["prenom"]
+            nom = request.POST["nom"]
+            user.prenom = prenom
+            user.nom = nom
+            user.save()
+            return HttpResponseRedirect('/bienvenue')
+        return render_to_response('modifier-profil.html', {'current_user':user}, context_instance=RequestContext(request))
+    else : 
+        return HttpResponseRedirect('/login')
+
+def voir_profil(request):
+    user_to_show_id = request.GET['user_id']
+    user_to_show = Utilisateur.objects.get(id = user_to_show_id)
+    return render_to_response('voir-profil.html', {"user_to_show": user_to_show}, context_instance=RequestContext(request))
     

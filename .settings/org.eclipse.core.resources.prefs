@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//blablacar1/admin.py=utf-8
 encoding//blablacar1/models.py=utf-8
-encoding//blablacar1/settings.py=utf-8
+encoding//blablacar1/settings/base.py=utf-8
+encoding//blablacar1/settings/local.py=utf-8
+encoding//blablacar1/settings/production.py=utf-8
 encoding//blablacar1/urls.py=utf-8
 encoding//blablacar1/views.py=utf-8
