@@ -120,8 +120,10 @@ def nouveau_trajet(request):
         form_valid = True
         date_depart       = request.POST['date_depart']
         heure_depart      = request.POST['heure_depart']
-        ville_depart      = request.POST['ville_depart']
-        ville_arrivee     = request.POST['ville_arrivee']
+        ville_depart_id   = request.POST['ville_depart']
+        ville_depart      = Ville.objects.get(id=ville_depart_id)
+        ville_arrivee_id  = request.POST['ville_arrivee']
+        ville_arrivee     = Ville.objects.get(id=ville_arrivee_id)
         capacite          = request.POST['capacite']
         prix_par_personne = request.POST['prix_par_personne'] 
         if date_depart == "" or heure_depart == "" or ville_depart == "" or ville_arrivee == "" or capacite == "" or prix_par_personne == "" :      
