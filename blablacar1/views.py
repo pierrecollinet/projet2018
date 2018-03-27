@@ -69,7 +69,7 @@ def signup(request):
         return render(request,'signup.html', {'mes_erreurs':errors})        
 
 def bienvenue(request):
-    if "user_id" in request.session :
+    if "user_id" in request.session and len(Utilisateur.objects.filter(id=request.session["user_id"])) == 1 :
         # On va "chercher" toutes les villes pour les mettre dans le champ "ville" du formulaire (select button)
         villes = Ville.objects.all() 
         user = Utilisateur.objects.get(id=request.session["user_id"])
