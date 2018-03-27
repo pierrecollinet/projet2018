@@ -166,7 +166,8 @@ def search(request):
     user = get_logged_user(request)
     if user :
         # Initialement on affiche tous les résultats
-        trajets = Trajet.objects.all()
+        today = date.today()
+        trajets = Trajet.objects.filter(date_depart__gte = today)
         # On passe toutes les villes au template pour le champ "select" ville départ et arrivée
         villes = Ville.objects.all()
         # si l'utilisateur clique sur chercher
@@ -202,8 +203,8 @@ def search(request):
 def book(request):
     user = get_logged_user(request)
     errors = []
-    trajets = Trajet.objects.all()
     today = date.today()
+    trajets = Trajet.objects.filter(date_depart__gte = today)
     if user :
         form_valid = True
         trajet_id = request.GET['trajet_id']
