@@ -120,16 +120,21 @@ def nouveau_trajet(request):
         form_valid = True
         date_depart       = request.POST['date_depart']
         heure_depart      = request.POST['heure_depart']
-        ville_depart_id   = request.POST['ville_depart']
-        ville_depart      = Ville.objects.get(id=ville_depart_id)
-        ville_arrivee_id  = request.POST['ville_arrivee']
-        ville_arrivee     = Ville.objects.get(id=ville_arrivee_id)
         capacite          = request.POST['capacite']
         prix_par_personne = request.POST['prix_par_personne'] 
-        if date_depart == "" or heure_depart == "" or ville_depart == "" or ville_arrivee == "" or capacite == "" or prix_par_personne == "" :      
+        if date_depart == "" or heure_depart == "" or capacite == "" or prix_par_personne == "" :      
             error = "Tu as oublié un/des champ(s)"
             errors.append(error)
-            form_valid = False  
+            form_valid = False
+        if "ville_arrivee" in request.POST and "ville_depart"  in request.POST : 
+            ville_depart_id   = request.POST['ville_depart']
+            ville_depart      = Ville.objects.get(id=ville_depart_id)
+            ville_arrivee_id  = request.POST['ville_arrivee']
+            ville_arrivee     = Ville.objects.get(id=ville_arrivee_id)
+        else : 
+            error = "Tu dois sélectionner une ville de départ et une ville d'arrivée"
+            errors.append(error)
+            form_valid = False            
         # Si le formulaire est valide
         if form_valid :
             # On sauve le trajet dans la DB
