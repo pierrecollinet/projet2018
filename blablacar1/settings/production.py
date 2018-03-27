@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'blablacar1.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS =  ['projetdjango.herokuapp.com',]
 DATABASES = {
     'default': {
@@ -119,7 +119,7 @@ DATE_INPUT_FORMATS = ['%d-%m-%Y']
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 STATIC_ROOT = "app-root/repo/wsgi/static"
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
