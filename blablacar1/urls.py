@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from views import bienvenue, signup, login, nouveau_trajet, logout, show_profile, search, book, evaluer_conducteur, modify_profile, voir_profil
+from blablacar1.views import bienvenue, signup, login, nouveau_trajet, logout, show_profile, search, book, evaluer_conducteur, modify_profile, voir_profil
 
 urlpatterns = [
     url(r'^$', bienvenue),
