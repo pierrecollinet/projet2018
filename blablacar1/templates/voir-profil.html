@@ -4,24 +4,51 @@
 
 
 {% block content %}
-<h1> Voir le profil</h1>
-<p>
-	<a href="/modifier-profil">Modifier mon profil</a>
-</p>
-<p>
-Prénom : {{user_to_show.prenom}}
-</p>
-<p>
-Nom : {{user_to_show.nom}}
-</p>
+<div class="container">
+	<div class="col-xs-12 col-md-6 col-md-offset-3 solid-box">
+		<h1>{% if current_user == user_to_show.id %}Profil de {{user_to_show}}{% else %}Mon profil{% endif %}</h1>
+
+		<p>
+		Prénom : {% if user_to_show.prenom %}{{user_to_show.prenom}} {% else %}<a href="/modifier-profil">Compléter mon profil</a>{% endif %}
+		</p>
+		<p>
+		Nom : {% if user_to_show.nom %}{{user_to_show.nom}} {% else %}<a href="/modifier-profil">Compléter mon profil</a>{% endif %}
+		</p>
+		<p>
+			<a href="/modifier-profil" class="btn btn-success">Modifier mon profil</a>
+			<a href="/chat-solvay" class="btn btn-danger">Participer au chat Solvay</a>
+		</p>
+	</div>
+</div>
+
+<hr>
 
 <h2>Mes statistiques</h2>
-<h3>Mes trajets</h3>
-{% for trajet in user_to_show.trajet_set.all %}
-	- {{ trajet.ville_depart }} à  {{ trajet.ville_arrivee }} - {{ trajet.date_depart|date:"d/m/Y" }}<br>
-{% endfor %}
-<h3>Les trajets auxquels j'ai participé (passager)</h3>
-{% for my_booking in user_to_show.booking_set.all %}
-	- {{ my_booking.trajet.ville_depart}} à  {{ my_booking.trajet.ville_arrivee }} - {{ my_booking.trajet.date_depart|date:"d/m/Y" }}<br>
-{% endfor %}
+<div class="row">
+	<div class="col-xs-12 col-md-6">
+		<div class="solid-box">
+		<h3>Mes trajets</h3>
+		{% if user_to_show.trajet_set.all|length == 0 %}
+			Pour l'instant tu n'as proposé aucun trajet. <a href="/nouveau-trajet">Envie de commencer ??</a>
+		{% else %}
+			{% for trajet in user_to_show.trajet_set.all %}
+				- {{ trajet.ville_depart }} à  {{ trajet.ville_arrivee }} - {{ trajet.date_depart|date:"d/m/Y" }}<br>
+			{% endfor %}
+		{% endif %}
+		</div>
+	</div>
+	
+	<div class="col-xs-12 col-md-6">
+		<div class="solid-box">
+		<h3>Les trajets auxquels j'ai participé (passager)</h3>
+		{% if user_to_show.booking_set.all|length == 0 %}
+			Pour l'instant tu as participé à aucun trajet. <a href="/search">Envie de commencer??</a>
+		{% else %}
+			{% for my_booking in user_to_show.booking_set.all %}
+				- {{ my_booking.trajet.ville_depart}} à  {{ my_booking.trajet.ville_arrivee }} - {{ my_booking.trajet.date_depart|date:"d/m/Y" }}<br>
+			{% endfor %}
+		{% endif %}
+		</div>
+	</div>
+</div>
 {% endblock %}

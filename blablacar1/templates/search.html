@@ -4,56 +4,63 @@
 
 
 {% block content %}
-<h1>Chercher un trajet</h1>
-<form action="" method="get">
-	<ul>
-		{% for error in mes_erreurs %}
-			<li class="error">{{ error }}</li>
-		{% endfor %}
-	</ul>	
-	<p>
-		<label>Date de départ</label>
-		<input type="date" name="date_depart">
-	</p>
-	<p>
-		<label>Heure de départ</label>
-		<input type="time" name="heure_depart">
-	</p>
-	<p>
-		<label>Ville de départ</label>
-		<select name="ville_depart">
-			<option value="disabled" selected disabled>Ville de départ</option>
-			{% for ville in villes %}
-				<option value="{{ville.id}}" >{{ ville }}</option>
-			{% endfor %}
-		</select>
-	</p>
-	<p>
-		<label>Ville d'arrivée</label>
-		<select name="ville_arrivee">
-			<option value="disabled" selected disabled>Ville de départ</option>
-			{% for ville in villes %}
-				<option value="{{ville.id}}" >{{ ville }}</option>
-			{% endfor %}
-		</select>
-	</p>
-	<p>
-		<label>Nombre de personnes</label>
-		<select name="capacite">
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6">6</option>
-		</select>
-	</p>
-	<p>
-		<input type="submit" value="Chercher">
-	</p>
+<div class="container">
 
-</form>
+<div class="col-xs-12 col-md-6 col-md-offset-3">
+	<div class="solid-box">
+		<h1>Chercher un trajet</h1>
+		<form action="" method="get">
+			<ul>
+				{% for error in mes_erreurs %}
+					<li class="error">{{ error }}</li>
+				{% endfor %}
+			</ul>	
+			<p>
+				<label>Date de départ</label>
+				<input type="date" name="date_depart">
+			</p>
+			<p>
+				<label>Heure de départ</label>
+				<input type="time" name="heure_depart">
+			</p>
+			<p>
+				<label>Ville de départ</label>
+				<select name="ville_depart">
+					<option value="disabled" selected disabled>Ville de départ</option>
+					{% for ville in villes %}
+						<option value="{{ville.id}}" >{{ ville }}</option>
+					{% endfor %}
+				</select>
+			</p>
+			<p>
+				<label>Ville d'arrivée</label>
+				<select name="ville_arrivee">
+					<option value="disabled" selected disabled>Ville de départ</option>
+					{% for ville in villes %}
+						<option value="{{ville.id}}" >{{ ville }}</option>
+					{% endfor %}
+				</select>
+			</p>
+			<p>
+				<label>Nombre de personnes</label>
+				<select name="capacite">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+				</select>
+			</p>
+			<p>
+				<input type="submit" class="btn btn-success" value="Chercher">
+			</p>
+		
+		</form>
+	</div>
+</div>
 
+<div class="col-xs-12">
 <section class="result-search">
 	<h2>Résultats de votre recherche</h2>
 
@@ -61,7 +68,7 @@
 		Aucun résultats ne correspond à votre recherche
 	{% else %}
 		{% for trajet in trajets %}
-		<div class="trajet">
+		<div class="col-xs-6 col-md-4 solid-box">
 			<b>Ville de départ</b> : {{ trajet.ville_depart }} <br>
 			<b>Ville d'arrivée</b> : {{ trajet.ville_arrivee }} <br>
 			<b>Date de départ</b> : {{ trajet.date_depart|date:"d/m/Y" }} <br>
@@ -69,12 +76,15 @@
 			<b>Capacité max</b> : {{ trajet.capacite }} <br>
 			<b>Prix par personne</b> : {{ trajet.prix_par_personne }} Eur/h<br>
 			<b>Conducteur</b> : <a href="/voir-profil?user_id={{trajet.conducteur.id}}">{{ trajet.conducteur }}</a> <br>
-			<a href="/book?trajet_id={{trajet.id}}"><button>Réserver</button></a>
+			<a class="btn btn-danger" href="/book?trajet_id={{trajet.id}}">Réserver</a>
 			
 		</div>
 		{% endfor %}
 	{% endif %}
 </section>
+</div>
+
+</div>
 {% endblock %}
 
 

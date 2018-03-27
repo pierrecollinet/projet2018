@@ -5,36 +5,101 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" >
     <head>
       <title>{% block title %} {% endblock %}</title>
+    
+    
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+		
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+    
 	  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
     <body>
-    	
-      <header>
-      	{% if current_user %}
-      		<a href="/logout">Se déconnecter</a>
-      		<a href="/voir-profil?user_id={{current_user.id}}&param=coucou">Voir mon profil</a>
-      		<a href="/nouveau-trajet"><button class="submit-btn">Proposer un trajet</button></a>
-      	{% else %}
-	        <a href="/login">Se connecter</a>
-	        <a href="/signup">Se créer un compte</a>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">BlaBlaCar</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/search">Réserver un trajet <span class="sr-only">(current)</span></a></li>
+        <li><a href="/nouveau-trajet">Proposer un trajet </a></li>
+        <li class="dropdown btn btn-success ">
+          <a href="#" style="color:white;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blocus Assistance <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="http://www.blocusassistance.be/">C'est quoi ?</a></li>
+            <li><a href="http://www.blocusassistance.be/django-module/inscription">Aide en Python/Django</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://www.blocusassistance.be/universite/programme-blocus-assiste">Aide en blocus</a></li>
+          </ul>
+        </li>        
+
+
+      </ul>
+      <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Chercher...">
+        </div>
+        <a class="btn btn-default">Go</a>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/chat-solvay">Chat Solvay <span class="sr-only">(current)</span></a></li>
+        {% if current_user %}
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{current_user.username}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/voir-profil?user_id={{current_user.id}}">Voir mon profil</a></li>
+            <li><a href="/modifier-profil">Modifier mon profil</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="danger"><a href="/logout">Se déconnecter</a></li>
+          </ul>
+        </li>        
+        {% else %}
+        		<li><a href="/login">Se connecter </a></li>
+        		<li><a href="/signup">Se créer un compte </a></li>
         {% endif %}
-        
-      </header>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>    	
 
       <div class="center">
         {% block content %}
         {% endblock %}
       </div>
 
-      <footer>
+      <footer style="margin-top:150px;">
+      	<p style="padding-top:10px;">
+        		<a target="_blank" class="btn btn-primary" href="/like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+         		J'aime
+         	</a>
+         </p>
 		<p>
-		<a href="/nouveau-trajet">Proposer un trajet</a>
+			<a href="/nouveau-trajet" class=" btn btn-default">Proposer un trajet</a>
+			<a href="/search"         class=" btn btn-default">Chercher un trajet</a>
 		</p>
-		<p>
-		<a href="/search">Chercher un trajet</a>
-		</p>
-        @developed by students from Solvay2018
+
+        @developed by Pierre from <a href="http://www.blocusassistance.be/">Blocus Assistance</a>
       </footer>
 
     </body>

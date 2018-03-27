@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response, render
 from django.http.response import HttpResponseRedirect
 from django.template import RequestContext
 
-from blablacar1.models import Utilisateur, Trajet, Booking, RatingConducteur, Ville
+from blablacar1.models import Utilisateur, Trajet, Booking, RatingConducteur, Ville, Message
 from datetime import date
 
 def get_logged_user(request):
@@ -50,7 +50,10 @@ def signup(request):
                 form_valid = False
                 error = "Introduis 2 passwords identiques stp"
                 errors.append(error)             
-        
+            if len(Utilisateur.objects.filter(username=username)) > 0 : 
+                form_valid = False
+                error = "il y a déjà un utilisateur avec ce username. Essaie en un autre"
+                errors.append(error)                   
             # 2. Si champs corrects --> sauver un nouvel utilisateur et rediriger vers login
             if form_valid : 
                 # A. Sauver un nouvel utilisateur dans DB
@@ -123,7 +126,7 @@ def nouveau_trajet(request):
         capacite          = request.POST['capacite']
         prix_par_personne = request.POST['prix_par_personne'] 
         if date_depart == "" or heure_depart == "" or ville_depart == "" or ville_arrivee == "" or capacite == "" or prix_par_personne == "" :      
-            error = "Tu as oublié un chamop"
+            error = "Tu as oublié un/des champ(s)"
             errors.append(error)
             form_valid = False  
         # Si le formulaire est valide
@@ -141,7 +144,7 @@ def nouveau_trajet(request):
             new_trajet.save()
             # On redirige vers la welcome page
             return HttpResponseRedirect('/bienvenue')
-    return render_to_response('nouveau-trajet.html', {'mes_erreurs':errors, "today":today}, context_instance=RequestContext(request))
+    return render_to_response('nouveau-trajet.html', {'mes_erreurs':errors, "today":today, 'current_user':current_user}, context_instance=RequestContext(request))
 
 def show_profile(request):
     user = get_logged_user(request)
@@ -286,7 +289,68 @@ def modify_profile(request):
         return HttpResponseRedirect('/login')
 
 def voir_profil(request):
-    user_to_show_id = request.GET['user_id']
-    user_to_show = Utilisateur.objects.get(id = user_to_show_id)
-    return render_to_response('voir-profil.html', {"user_to_show": user_to_show}, context_instance=RequestContext(request))
+    if 'user_id' in request.session : 
+        current_user = Utilisateur.objects.get(id=request.session['user_id'])
+        user_to_show_id = request.GET['user_id']
+        user_to_show = Utilisateur.objects.get(id = user_to_show_id)
+        return render_to_response('voir-profil.html', {"user_to_show": user_to_show, 'current_user':current_user}, context_instance=RequestContext(request))
+    else : 
+        return HttpResponseRedirect('/login')
     
+def chat_solvay(request):
+    if 'user_id' in request.session : 
+        current_user = Utilisateur.objects.get(id=request.session['user_id'])
+        form_valid = True
+        errors = []
+        messages = Message.objects.all().order_by('date')
+        if request.POST :
+            message =  request.POST['message']
+            if message =="":
+                form_valid = False
+                error = "Tu ne peux pas envoyer un message vide..."
+                errors.append(error)
+                
+            if form_valid :
+                new_message = Message(message=message, auteur=current_user)
+                new_message.save()
+        if len(Message.objects.filter(auteur=current_user)) > 0 and current_user.like == False :
+            show_modal = True
+        else : 
+            show_modal = False
+        return render(request, 'chat-solvay.html', {'show_modal':show_modal,'messages':messages,'current_user':current_user, 'mes_erreurs':errors})
+    else : 
+        return HttpResponseRedirect('/login')
+
+def like(request):
+    if 'user_id' in request.session : 
+        current_user = Utilisateur.objects.get(id=request.session['user_id'])
+        current_user.like = True
+        current_user.save()
+        return HttpResponseRedirect('https://www.facebook.com/blocusassistance/')
+    else : 
+        return HttpResponseRedirect('/login')
+    
+def change_mdp(request):
+    if 'user_id' in request.session : 
+        current_user = Utilisateur.objects.get(id=request.session['user_id'])
+        errors = []
+        if request.POST : 
+            form_valid = True
+            old_mdp = request.POST["old_mdp"]
+            new_mdp1 = request.POST["new_mdp1"]
+            new_mdp2 = request.POST["new_mdp2"]
+            if old_mdp != current_user.password : 
+                error = "Ton ancien mot de passe n'est pas correct"
+                errors.append(error)
+                form_valid=False
+            if new_mdp1 != new_mdp2 : 
+                error = "Introduis 2 fois le même mot de passe"
+                errors.append(error)
+                form_valid=False
+            if form_valid : 
+                current_user.password = new_mdp1
+                current_user.save()
+                return HttpResponseRedirect('/voir-profil?user_id='+str(current_user.id))
+        return render(request, 'change-mdp.html', {'current_user':current_user,'mes_erreurs':errors})
+    else : 
+        return HttpResponseRedirect('/login')

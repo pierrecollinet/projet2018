@@ -4,24 +4,31 @@
 
 
 {% block content %}
-<h1> Modifier profil</h1>
 
-<form action="" method="post">
-{% csrf_token %}
-<p>
-	<label>Prénom : </label>
-	<input type="text" name="prenom" value="{% if current_user.prenom %}{{current_user.prenom}}{% endif %}">
-</p>
-
-<p>
-	<label>Nom : </label>
-	<input type="text" name="nom" value="{{current_user.nom}}">
-</p>
-
-<p>
-	<input type="submit">
-</p>
-</form>
+<div class="container">
+	<div class="col-xs-12 col-md-6 col-md-offset-3 solid-box">
+		<h1> Modifier profil</h1>
+		
+		<form action="" method="post">
+		{% csrf_token %}
+		<p>
+			<label>Prénom : </label>
+			<input type="text" name="prenom" value="{% if current_user.prenom %}{{current_user.prenom}}{% endif %}">
+		</p>
+		
+		<p>
+			<label>Nom : </label>
+			<input type="text" name="nom" value="{% if current_user.nom %}{{current_user.nom}}{% endif %}">
+		</p>
+		
+		<p>
+			<input type="submit" value="Modifier" class="btn btn-success">
+			<a href="/change-mdp">Modifier mon Mot de passe</a>
+		</p>
+		</form>
+	
+	</div>
+</div>
 {% endblock %}
 
 

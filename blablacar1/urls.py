@@ -19,11 +19,10 @@ from django.conf.urls import  include, url
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-
 from django.conf import settings
 from django.conf.urls.static import static
 
-from blablacar1.views import bienvenue, signup, login, nouveau_trajet, logout, show_profile, search, book, evaluer_conducteur, modify_profile, voir_profil
+from blablacar1.views import bienvenue, signup, login, nouveau_trajet, logout, show_profile, search, book, evaluer_conducteur, modify_profile, voir_profil,chat_solvay, like, change_mdp
 
 urlpatterns = [
     url(r'^$', bienvenue),
@@ -38,6 +37,9 @@ urlpatterns = [
     url(r'^book/$', book),
     url(r'^voir-profil/$', voir_profil),
     url(r'^evaluer-conducteur/$', evaluer_conducteur),
+    url(r'^chat-solvay/$', chat_solvay),
+    url(r'^like/$', like),
+    url(r'^change-mdp/$', change_mdp),
 
     url(r'^admin/', include(admin.site.urls)),
 
@@ -46,15 +48,14 @@ urlpatterns = [
 # 
 # urlpatterns += staticfiles_urlpatterns()
 # urlpatterns += (r'^static/(?P.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
-# 
-# from django.conf import settings
-# import os
-# from django.views.static import serve as staticserve
-# 
+ 
+from django.conf import settings
+import os
+from django.views.static import serve as staticserve
+ 
 # urlpatterns += ('',
 #         (r'^static/(?P<path>.*)$', staticserve,
 #             {'document_root': os.path.join(os.path.dirname(__file__), 'static')} ),
 #         )
 # 
-
 

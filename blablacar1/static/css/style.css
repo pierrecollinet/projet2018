@@ -9,9 +9,18 @@ header {
  	font-size:65px;
 }
 
+.search-form {
+    padding-top: 30px;
+}
+
 .search-form input {
 	width:22%;
 	height:30px;
+	color:black;
+}
+
+.search-form select {
+	color:black;
 }
 
 .submit-btn {
@@ -64,4 +73,19 @@ body {
 
 .result-search{
 	text-align:center;
+}
+
+.solid-box {
+	border : solid 1px;
+	padding:20px;
+}
+
+.other-msg{
+	background-color:#cfe9cf;
+	border : solid 1px white;
+}
+
+.my-msg{
+	background-color:#efeffe;
+	border : solid 1px white;
 }

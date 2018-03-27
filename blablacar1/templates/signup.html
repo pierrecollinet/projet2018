@@ -4,31 +4,37 @@
 
 
 {% block content %}
-<h1> Se créer un compte</h1>
-
-<form>
-
-
-<ul>
-	{% for error in mes_erreurs %}
-		<li class="error">{{ error }}</li>
-	{% endfor %}
-</ul>
-<p>
-	<label>Nom d'utilisateur</label>
-	<input type="text" name="username" value="{{ username }}">
-</p>
-<p>
-	<label>Password</label>
-	<input type="password" name="password1" value="{{password1}}">
-</p>
-<p>
-	<label>Réintroduis ton password</label>
-	<input type="password" name="password2">
-</p>
-<p>
-	<input type="submit" value="Se créer un compte">
-</p>
-
-</form>
+<div class="container">
+	<div class="col-xs-12 col-md-6 col-md-offset-3 solid-box">
+			
+		<h1> Se créer un compte</h1>
+		
+		<form>
+		
+		
+		<ul>
+			{% for error in mes_erreurs %}
+				<li class="error">{{ error }}</li>
+			{% endfor %}
+		</ul>
+		<p>
+			<label>Nom d'utilisateur</label>
+			<input type="text" name="username" value="{{ username }}">
+		</p>
+		<p>
+			<label>Password</label>
+			<input type="password" name="password1" value="{{password1}}">
+		</p>
+		<p>
+			<label>Réintroduis ton password</label>
+			<input type="password" name="password2">
+		</p>
+		<p>
+			<input type="submit" class="btn btn-success" value="Se créer un compte">
+			<a href="/login">Se connecter</a>
+		</p>
+		
+		</form>
+	</div>
+</div>
 {% endblock %}

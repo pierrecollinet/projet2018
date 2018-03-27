@@ -7,6 +7,8 @@ class Utilisateur(models.Model):
     prenom = models.CharField(max_length=100, blank = True, null = True)
     nom = models.CharField(max_length=100, blank = True, null = True)
     password = models.CharField(max_length=100)
+    like = models.BooleanField(default=False)
+
 
     def __str__(self):
         return self.username
@@ -48,3 +50,11 @@ class RatingConducteur(models.Model):
     
     def __str__(self):
         return self.auteur.username + ' par rapport a ' + self.trajet.conducteur.username 
+
+class Message(models.Model):
+    message = models.TextField()
+    auteur = models.ForeignKey(Utilisateur)
+    date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.auteur.username 
