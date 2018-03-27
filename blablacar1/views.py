@@ -224,7 +224,7 @@ def book(request):
             errors.append(error)
             form_valid = False
         # C. Vérifier que le trajet n'est pas déjà passé
-        if trajet.date_depart <= today : 
+        if trajet.date_depart < today : 
             error = "Tu ne peux pas réserver dans le passé"
             errors.append(error)
             form_valid = False
