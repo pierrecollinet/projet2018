@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.http.response import HttpResponseRedirect
 from django.template import RequestContext
 
@@ -104,7 +104,7 @@ def login(request):
             # Alors on renvoie vers la page welcome
             
         # Si le formulaire n'est pas envoyé
-        return render_to_response('login.html', {'mes_erreurs':errors}, context_instance=RequestContext(request))
+        return render(request, 'login.html', {'mes_erreurs':errors})
 
 import datetime
 def nouveau_trajet(request):
