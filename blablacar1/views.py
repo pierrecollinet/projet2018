@@ -7,7 +7,7 @@ from blablacar1.models import Utilisateur, Trajet, Booking, RatingConducteur, Vi
 from datetime import date
 
 def get_logged_user(request):
-    if "user_id" in request.session : 
+    if "user_id" in request.session and len(Utilisateur.objects.filter(id=request.session["user_id"])) == 1  : 
         user = Utilisateur.objects.get(id=request.session["user_id"])
         return user
     else : 
