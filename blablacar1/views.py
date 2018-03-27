@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render
 from django.http.response import HttpResponseRedirect
-from django.template import RequestContext
 
 from blablacar1.models import Utilisateur, Trajet, Booking, RatingConducteur, Ville, Message
 from datetime import date
@@ -65,16 +64,16 @@ def signup(request):
                 # B. Rediriger vers la page de login
                 return HttpResponseRedirect("/login")
             else : 
-                return render_to_response('signup.html', {'mes_erreurs':errors, 'username':username, 'password1':password1})  
+                return render(request, 'signup.html', {'mes_erreurs':errors, 'username':username, 'password1':password1})  
         # 3. Sinon, recharger la même page
-        return render_to_response('signup.html', {'mes_erreurs':errors})        
+        return render(request,'signup.html', {'mes_erreurs':errors})        
 
 def bienvenue(request):
     if "user_id" in request.session :
         # On va "chercher" toutes les villes pour les mettre dans le champ "ville" du formulaire (select button)
         villes = Ville.objects.all() 
         user = Utilisateur.objects.get(id=request.session["user_id"])
-        return render_to_response('welcome.html', {'current_user':user, 'villes':villes})
+        return render(request, 'welcome.html', {'current_user':user, 'villes':villes})
     else : 
         return HttpResponseRedirect('/login')
    
@@ -93,7 +92,6 @@ def login(request):
             password = request.POST['password']
             # Si le formulaire n'est pas valide
             users = Utilisateur.objects.filter(username=username, password=password)
-            print(users)
             if len(users) != 1 : 
                 error = "mdp ou username erroné"
                 errors.append(error)
@@ -144,7 +142,7 @@ def nouveau_trajet(request):
             new_trajet.save()
             # On redirige vers la welcome page
             return HttpResponseRedirect('/bienvenue')
-    return render_to_response('nouveau-trajet.html', {'mes_erreurs':errors, "today":today, 'current_user':current_user}, context_instance=RequestContext(request))
+    return render(request,'nouveau-trajet.html', {'mes_erreurs':errors, "today":today, 'current_user':current_user})
 
 def show_profile(request):
     user = get_logged_user(request)
@@ -152,7 +150,7 @@ def show_profile(request):
         if 'user_id' in request.GET : 
             user_id = request.GET['user_id']
             user_to_show = Utilisateur.objects.get(id=user_id)
-        return render_to_response('show-profile.html', {'current_user':user, 'user_to_show':user_to_show}, context_instance=RequestContext(request))
+        return render(request,'show-profile.html', {'current_user':user, 'user_to_show':user_to_show})
     else : 
         return HttpResponseRedirect('/login')
 
@@ -189,7 +187,7 @@ def search(request):
                 capacite =  request.GET['capacite']
                 if capacite != "":
                     trajets = trajets.filter(capacite__gte = capacite)
-        return render_to_response('search.html', {'current_user':user, 'trajets':trajets, 'villes':villes}, context_instance=RequestContext(request))
+        return render(request, 'search.html', {'current_user':user, 'trajets':trajets, 'villes':villes})
     else : 
         return HttpResponseRedirect('/login')
 
@@ -231,7 +229,7 @@ def book(request):
             return HttpResponseRedirect('/voir-profil?user_id='+str(user.id))
         # 3°. Si il n'est pas valide --> message d'erreur et redirect vers booking page
         else : 
-            return render_to_response('search.html', {'current_user':user, 'trajets':trajets, 'mes_erreurs':errors}, context_instance=RequestContext(request))
+            return render(request, 'search.html', {'current_user':user, 'trajets':trajets, 'mes_erreurs':errors})
         # 3°. Si le formulaire est valide --> On crée une nouvelle reservation dans la DB et redirect vers ma profile page
         
     else : 
@@ -266,7 +264,7 @@ def evaluer_conducteur(request):
                 new_rating.save()
                 return HttpResponseRedirect('/bienvenue')
                 
-        return render_to_response('evaluer-conducteur.html', {'current_user':user, 'trajet':trajet, 'mes_erreurs':errors}, context_instance=RequestContext(request))       
+        return render(request, 'evaluer-conducteur.html', {'current_user':user, 'trajet':trajet, 'mes_erreurs':errors})       
     else : 
         return HttpResponseRedirect('/login')    
     
@@ -284,7 +282,7 @@ def modify_profile(request):
             user.nom = nom
             user.save()
             return HttpResponseRedirect('/bienvenue')
-        return render_to_response('modifier-profil.html', {'current_user':user}, context_instance=RequestContext(request))
+        return render(request, 'modifier-profil.html', {'current_user':user})
     else : 
         return HttpResponseRedirect('/login')
 
@@ -293,7 +291,7 @@ def voir_profil(request):
         current_user = Utilisateur.objects.get(id=request.session['user_id'])
         user_to_show_id = request.GET['user_id']
         user_to_show = Utilisateur.objects.get(id = user_to_show_id)
-        return render_to_response('voir-profil.html', {"user_to_show": user_to_show, 'current_user':current_user}, context_instance=RequestContext(request))
+        return render(request, 'voir-profil.html', {"user_to_show": user_to_show, 'current_user':current_user})
     else : 
         return HttpResponseRedirect('/login')
     
