@@ -46,3 +46,18 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += (r'^static/(?P.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
+
+from django.conf import settings
+import os
+from django.views.static import serve as staticserve
+
+urlpatterns += ('',
+        (r'^static/(?P<path>.*)$', staticserve,
+            {'document_root': os.path.join(os.path.dirname(__file__), 'static')} ),
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.MEDIA_ROOT,
+        })
+        )
+    
+    
+
