@@ -21,6 +21,9 @@
 			<p>
 				<b>Commentaire</b> : {{ r.commentaire }}
 			</p>
+			<p>
+				<b>Trajet</b> : Le {{ r.trajet.date|date:'d/m'}} de {{ r.trajet.ville_depart }} à {{ r.trajet.ville_arrivee }} (<a href="/voir-profil?user_id={{r.trajet.conducteur.id}}">{{ r.trajet.conducteur.username }}</a>)
+			</p>
 			
 			<hr>
 		{% endfor %}
