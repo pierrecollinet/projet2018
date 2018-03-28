@@ -22,7 +22,7 @@
 				<b>Commentaire</b> : {{ r.commentaire }}
 			</p>
 			<p>
-				<b>Trajet</b> : Le {{ r.trajet.date|date:'d/m'}} de {{ r.trajet.ville_depart }} à {{ r.trajet.ville_arrivee }} (<a href="/voir-profil?user_id={{r.trajet.conducteur.id}}">{{ r.trajet.conducteur.username }}</a>)
+				<b>Trajet</b> : Le {{ r.trajet.date_depart|date:'d/m'}} de {{ r.trajet.ville_depart }} à {{ r.trajet.ville_arrivee }} (<a href="/voir-profil?user_id={{r.trajet.conducteur.id}}">{{ r.trajet.conducteur.username }}</a>)
 			</p>
 			
 			<hr>
