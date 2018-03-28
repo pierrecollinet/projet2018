@@ -22,7 +22,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
 
-from blablacar1.views import bienvenue, signup, login, nouveau_trajet, logout, show_profile, search, book, evaluer_conducteur, modify_profile, voir_profil,chat_solvay, like, change_mdp
+from blablacar1.views import bienvenue, signup, login, nouveau_trajet, logout, show_profile, search, book, evaluer_conducteur, modify_profile, voir_profil,chat_solvay, like, change_mdp,voir_ratings
 
 urlpatterns = [
     url(r'^$', bienvenue),
@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^chat-solvay/$', chat_solvay),
     url(r'^like/$', like),
     url(r'^change-mdp/$', change_mdp),
+    url(r'^voir-ratings/$', voir_ratings),
 
     url(r'^admin/', include(admin.site.urls)),
 

@@ -4,43 +4,46 @@
 
 
 {% block content %}
-<h1>Evaluer le conducteur {{ trajet.conducteur.username}}</h1>
-<form method="post">
-{% csrf_token %}
-
-<ul>
-	{% for error in mes_erreurs %}
-		<li class="error">{{ error }}</li>
-	{% endfor %}
-</ul>
-<p>
-	<label>Ponctualité</label>
-	<select name="ponctualite">
-		<option value="1">1</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
-		<option value="4">4</option>
-		<option value="5">5</option>
-	</select>
-</p>
-<p>
-	<label>Propreté de la voiture</label>
-	<select name="proprete">
-		<option value="1">1</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
-		<option value="4">4</option>
-		<option value="5">5</option>
-	</select>
-</p>
-<p>
-	<label>Commentaire général</label>
-	<textarea rows="4" cols="50" name="commentaire">
-	Entre ton commentaire ici...</textarea>
-</p>
-<p>
-	<input type="submit" value="Confirmer">
-	<a href="/bienvenue">Retour à la page d'accueil</a>
-</p>	
-</form>
+<div class="container">
+	<div class="col-xs-12 col-md-6 col-md-offset-3 solid-box">
+		<h1>Evaluer le conducteur {{ trajet.conducteur.username}}</h1>
+		<form method="post">
+		{% csrf_token %}
+		
+		<ul>
+			{% for error in mes_erreurs %}
+				<li class="error">{{ error }}</li>
+			{% endfor %}
+		</ul>
+		<p>
+			<label>Ponctualité</label>
+			<select name="ponctualite">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+		</p>
+		<p>
+			<label>Propreté de la voiture</label>
+			<select name="proprete">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+		</p>
+		<p>
+			<label>Commentaire général</label>
+			<textarea rows="4" cols="50" name="commentaire" placeholder="Entre ton commentaire ici..."></textarea>
+		</p>
+		<p>
+			<input type="submit" class="btn btn-success" value="Confirmer">
+			<a href="/bienvenue">Retour à la page d'accueil</a>
+		</p>	
+		</form>
+	</div>
+</div>
 {% endblock %}

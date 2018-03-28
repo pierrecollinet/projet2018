@@ -6,13 +6,22 @@
 {% block content %}
 <div class="container">
 	<div class="col-xs-12 col-md-6 col-md-offset-3 solid-box">
-		<h1>{% if current_user == user_to_show.id %}Profil de {{user_to_show}}{% else %}Mon profil{% endif %}</h1>
+		<h1>{% if current_user.id != user_to_show.id %}Profil de {{user_to_show}}{% else %}Mon profil{% endif %}</h1>
 
 		<p>
-		Prénom : {% if user_to_show.prenom %}{{user_to_show.prenom}} {% else %}<a href="/modifier-profil">Compléter mon profil</a>{% endif %}
+		<b>Prénom</b> : {% if user_to_show.prenom %}{{user_to_show.prenom}} {% else %}<a href="/modifier-profil">Compléter mon profil</a>{% endif %}
 		</p>
 		<p>
-		Nom : {% if user_to_show.nom %}{{user_to_show.nom}} {% else %}<a href="/modifier-profil">Compléter mon profil</a>{% endif %}
+		<b>Nom</b> : {% if user_to_show.nom %}{{user_to_show.nom}} {% else %}<a href="/modifier-profil">Compléter mon profil</a>{% endif %}
+		</p>
+		<p>
+		<b>Moyenne ponctualité</b> : {% if moyenne_ponctualite == 0 %}Aucun rating{% else %}{{ moyenne_ponctualite }}{% endif %}
+		</p>
+		<p>
+		<b>Moyenne propreté</b> : {% if moyenne_proprete == 0 %}Aucun rating{% else %}{{ moyenne_proprete }}{% endif %}
+		</p>
+		<p>
+			{% if moyenne_proprete != 0 %}<a href="/voir-ratings?user_id={{user_to_show.id}}">+ Voir tous les ratings</a>{% endif %}
 		</p>
 		<p>
 			<a href="/modifier-profil" class="btn btn-success">Modifier mon profil</a>
@@ -45,7 +54,9 @@
 			Pour l'instant tu as participé à aucun trajet. <a href="/search">Envie de commencer??</a>
 		{% else %}
 			{% for my_booking in user_to_show.booking_set.all %}
-				- {{ my_booking.trajet.ville_depart}} à  {{ my_booking.trajet.ville_arrivee }} - {{ my_booking.trajet.date_depart|date:"d/m/Y" }}<br>
+				- {{ my_booking.trajet.ville_depart}} à  {{ my_booking.trajet.ville_arrivee }} - {{ my_booking.trajet.date_depart|date:"d/m/Y" }}
+				<a href="/evaluer-conducteur?trajet_id={{my_booking.trajet.id}}">Evaluer le conducteur</a>
+				<br>
 			{% endfor %}
 		{% endif %}
 		</div>

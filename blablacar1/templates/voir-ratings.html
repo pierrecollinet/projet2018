@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %} Voir tous les ratings - {{ current_user.username }}{% endblock %}
+
+
+{% block content %}
+<div class="container">
+	<div class="col-xs-12 col-md-6 col-md-offset-3 solid-box">
+		<h1>Voir tous les ratings -  {{ current_user.username }}</h1>
+
+		{% for r in ratings %}
+			<p>
+				<b>Auteur</b> : <a href="/voir-profil?user_id={{r.auteur.id}}">{{ r.auteur.username }}</a>
+			</p>
+			<p>
+				<b>Propreté</b> : {{ r.proprete }}
+			</p>
+			<p>
+				<b>Ponctualité</b> : {{ r.ponctualite }}
+			</p>
+			<p>
+				<b>Commentaire</b> : {{ r.commentaire }}
+			</p>
+			
+			<hr>
+		{% endfor %}
+			<p>
+				<a href="/voir-profil?user_id={{current_user.id}}">Retour à mon profil</a>
+			</p>
+	</div>
+</div>
+
+{% endblock %}

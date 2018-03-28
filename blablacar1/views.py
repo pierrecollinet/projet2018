@@ -300,7 +300,13 @@ def voir_profil(request):
         current_user = Utilisateur.objects.get(id=request.session['user_id'])
         user_to_show_id = request.GET['user_id']
         user_to_show = Utilisateur.objects.get(id = user_to_show_id)
-        return render(request, 'voir-profil.html', {"user_to_show": user_to_show, 'current_user':current_user})
+        ratings = RatingConducteur.objects.filter(trajet__in = Trajet.objects.filter(conducteur=user_to_show))
+        moyenne_proprete = 0
+        moyenne_ponctualite = 0 
+        for r in ratings : 
+            moyenne_proprete += int(r.proprete)
+            moyenne_ponctualite += int(r.ponctualite)
+        return render(request, 'voir-profil.html', {'moyenne_proprete':moyenne_proprete,'moyenne_ponctualite':moyenne_ponctualite,"user_to_show": user_to_show, 'current_user':current_user})
     else : 
         return HttpResponseRedirect('/login')
     
@@ -359,5 +365,17 @@ def change_mdp(request):
                 current_user.save()
                 return HttpResponseRedirect('/voir-profil?user_id='+str(current_user.id))
         return render(request, 'change-mdp.html', {'current_user':current_user,'mes_erreurs':errors})
+    else : 
+        return HttpResponseRedirect('/login')
+
+def voir_ratings(request):
+    if 'user_id' in request.session : 
+        current_user = Utilisateur.objects.get(id=request.session['user_id'])
+        errors = []
+        if 'user_id' in request.GET : 
+            user = Utilisateur.objects.get(id=request.GET['user_id'])
+            trajets = Trajet.objects.filter(conducteur = user)
+            ratings = RatingConducteur.objects.filter(trajet__in = trajets)
+        return render(request, 'voir-ratings.html', {'current_user':current_user,'mes_erreurs':errors, 'ratings':ratings})
     else : 
         return HttpResponseRedirect('/login')
