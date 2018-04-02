@@ -5,7 +5,7 @@ include/
 pip-selfcheck.json
 
 *.local.py
-projetpaques2018.settings.settings.local.py
+projetpaques2018/settings/local.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
