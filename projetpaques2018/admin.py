@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from blablacar1.models import Utilisateur, Trajet, Booking, RatingConducteur, Ville, Message
+from projetpaques2018.models import Utilisateur, Trajet, Booking, RatingConducteur, Ville, Message
 
 admin.site.register(Utilisateur)
 admin.site.register(Ville)

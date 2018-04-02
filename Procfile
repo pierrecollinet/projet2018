@@ -1,2 +1,2 @@
-web: gunicorn blablacar1.wsgi --log-file -
+web: gunicorn projetpaques2018.wsgi --log-file -
 

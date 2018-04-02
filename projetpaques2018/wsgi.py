@@ -1,5 +1,5 @@
 """
-WSGI config for blablacar1 project.
+WSGI config for projetpaques2018 project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -8,13 +8,13 @@ https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 """
 
 import os
-import sys 
+import sys
 
 
 
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "blablacar1.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "projetpaques2018.settings")
 
 application = get_wsgi_application()

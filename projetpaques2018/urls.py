@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""blablacar1 URL Configuration
+"""projetpaques2018 URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.8/topics/http/urls/
@@ -22,7 +22,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
 
-from blablacar1.views import bienvenue, signup, login, nouveau_trajet, logout, show_profile, search, book, evaluer_conducteur, modify_profile, voir_profil,chat_solvay, like, change_mdp,voir_ratings
+from projetpaques2018.views import bienvenue, signup, login, nouveau_trajet, logout, show_profile, search, book, evaluer_conducteur, modify_profile, voir_profil,chat_solvay, like, change_mdp,voir_ratings
 
 urlpatterns = [
     url(r'^$', bienvenue),
@@ -46,17 +46,17 @@ urlpatterns = [
 
 ]
 # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-# 
+#
 # urlpatterns += staticfiles_urlpatterns()
 # urlpatterns += (r'^static/(?P.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
- 
+
 from django.conf import settings
 import os
 from django.views.static import serve as staticserve
- 
+
 # urlpatterns += ('',
 #         (r'^static/(?P<path>.*)$', staticserve,
 #             {'document_root': os.path.join(os.path.dirname(__file__), 'static')} ),
 #         )
-# 
+#
 
