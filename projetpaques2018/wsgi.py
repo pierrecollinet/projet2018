@@ -14,7 +14,7 @@ import sys
 
 from django.core.wsgi import get_wsgi_application
 
-import settings
+from django.conf import settings
 # To accept accent
 if settings.DEBUG :
   reload(sys)
