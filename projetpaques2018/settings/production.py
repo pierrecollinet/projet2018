@@ -25,7 +25,7 @@ print("je suis en production !")
 SECRET_KEY = '5@nn0-(0j&t@=o!ie2x(9pwp%hu(ms74lh7$f&gjob3k4719cd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 
