@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %} Tableau de bord{% endblock %}
+
+
+{% block content %}
+<div class="container">
+
+  <div class="col-xs-12 col-md-12">
+    <div class="">
+      <h1>Tableau de bord</h1>
+      {% if vols|length == 0 %}
+        Aucun vols pour le moment
+      {% else %}
+        {% for vol in vols %}
+        <div class="col-xs-6 col-md-6 solid-box">
+          <h2>Infos générales</h2>
+          <b>Ville de départ</b> : {{ vol.ville_depart }} <br>
+          <b>Ville d'arrivée</b> : {{ vol.ville_arrivee }} <br>
+          <b>Date de départ</b> : {{ vol.date_depart|date:"d/m/Y" }} <br>
+          <b>Heure de départ</b> : {{ vol.heure_depart|date:'H:i' }} <br>
+          <b>Heure d'arrivée</b> : {{ vol.heure_arrivee|date:'H:i' }} <br>
+          <b>Prix par personne</b> : {{ vol.prix}} Eur/h<br>
+          <b>Avion</b> : {{ vol.avion }} <br>
+
+          <h2>Les réservations</h2>
+          {% for r in vol.booking_set.all %}
+            {{ forloop.counter }}- {{ r.vol.ville_depart }} à  {{ r.vol.ville_arrivee }} - {{ r.vol.date_depart|date:"d/m/Y" }} pour {{r.nombre_de_places}} personnes<br>
+            -->revenu : {{ r.calculate_price }} Eur<br>
+          {% endfor %}
+          <hr>
+          <b>Revenu actuel de ce vol</b> : {{ vol.calculate_revenu_total }} Eur <br>
+          <b>Capacité de l'avion</b> : {{ vol.avion.capacite }} places <br>
+          <b>Places réservées</b> : {{vol.get_places_reservees}} places<br>
+          <b>Places disponibles</b> : {{vol.get_places_dispos}} places<br>
+        </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %} Proposer un nouveau trajet{% endblock %}
+
+
+{% block content %}
+<div class="container">
+  <div class="col-xs-12 col-md-6 col-md-offset-3 solid-box">
+  <h1> Nouveau trajet</h1>
+
+  <form action="" method="post">
+  {% csrf_token %}
+
+  <ul>
+    {% for error in mes_erreurs %}
+      <li class="error">{{ error }}</li>
+    {% endfor %}
+  </ul>
+  <p>
+    <label>Date de départ</label>
+    <input type="date" name="date_depart" placeholder = "ex : {{ today|date:"Y-m-d"}}" value="{{ today|date:"Y-m-d"}}">
+  </p>
+  <p>
+    <label>Heure de départ</label>
+    <input type="time" name="heure_depart" placeholder = "ex : 12:15" value ="16:00">
+  </p>
+  <p>
+    <label>Heure d'arrivée</label>
+    <input type="time" name="heure_arrivee" placeholder = "ex : 12:15" value ="16:00">
+  </p>
+  <p>
+    <label>Ville de départ</label>
+        <select name="ville_depart">
+          {% for ville in villes %}
+            <option value="{{ville.id}}" >{{ ville }}</option>
+          {% endfor %}
+        </select>
+  </p>
+  <p>
+    <label>Ville d'arrivée</label>
+        <select name="ville_arrivee">
+          {% for ville in villes %}
+            <option value="{{ville.id}}" >{{ ville }}</option>
+          {% endfor %}
+        </select>
+  </p>
+  <p>
+    <label>Avion</label>
+        <select name="avion_id">
+          {% for avion in avions %}
+            <option value="{{avion.id}}" >{{ avion.modele }}</option>
+          {% endfor %}
+        </select>
+  </p>
+  <p>
+    <label>Prix par personne [en Eur]</label>
+    <input type="text" placeholder="ex : 142" name="prix">
+  </p>
+  <p>
+    <input type="submit" value="Chercher" class="btn btn-success">
+    <a href="/bienvenue">Retour à la page d'accueil</a>
+  </p>
+
+  </form>
+</div>
+</div>
+{% endblock %}

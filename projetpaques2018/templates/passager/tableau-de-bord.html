@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %} Tableau de bord passager{% endblock %}
+
+
+{% block content %}
+<div class="container">
+  <div class="col-xs-12 col-md-6 col-md-offset-3 solid-box">
+    <h1>Tableau de bord passager</h1>
+
+    <p>
+    <b>Prénom</b> : {% if user_to_show.prenom %}{{user_to_show.prenom}} {% else %}<a href="/modifier-profil">Compléter mon profil</a>{% endif %}
+    </p>
+    <p>
+    <b>Nom</b> : {% if user_to_show.nom %}{{user_to_show.nom}} {% else %}<a href="/modifier-profil">Compléter mon profil</a>{% endif %}
+    </p>
+    <p>
+
+    <p>
+      <a href="/modifier-profil" class="btn btn-success">Modifier mon profil</a>
+      <a href="/chat-solvay" class="btn btn-danger">Participer au chat Solvay</a>
+    </p>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <h2>Mes Réservation</h2>
+  <div class="col-xs-12 col-md-6">
+    <div class="solid-box">
+    <h3>Vols directs</h3>
+    {% if reservations|length == 0 %}
+      Pour l'instant tu n'as fait aucune réservation. <a href="/nouveau-trajet">Envie de commencer ??</a>
+    {% else %}
+      {% for r in reservations %}
+        - {{ r.vol.ville_depart }} à  {{ r.vol.ville_arrivee }} - {{ r.vol.date_depart|date:"d/m/Y" }} pour {{r.nombre_de_places}} personnes<br>
+      {% endfor %}
+    {% endif %}
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-6">
+    <div class="solid-box">
+    <h3>Vols indirects</h3>
+    {% if reservations_indirectes|length == 0 %}
+      Pour l'instant tu n'as fait aucune réservation. <a href="/nouveau-trajet">Envie de commencer ??</a>
+    {% else %}
+      {% for r in reservations_indirectes %}
+        - {{ r.vol1.ville_depart }} à  {{ r.vol2.ville_arrivee }} - {{ r.vol.date_depart|date:"d/m/Y" }} pour {{r.nombre_de_places}} personnes (étape à {{ r.vol1.ville_arrivee }})<br>
+      {% endfor %}
+    {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -12,9 +12,12 @@ import sys
 
 
 
-
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "projetpaques2018.settings")
+# To accept accent
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "projetpaques2018.settings")
 application = get_wsgi_application()

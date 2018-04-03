@@ -22,19 +22,36 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
 
-from projetpaques2018.views import bienvenue, signup, login, nouveau_trajet, logout, show_profile, search, book, evaluer_conducteur, modify_profile, voir_profil,chat_solvay, like, change_mdp,voir_ratings
+from projetpaques2018.views import bienvenue, signup, login, logout,    show_profile, evaluer_conducteur, modify_profile, voir_profil,chat_solvay, like, change_mdp,voir_ratings
+# Employés urls
+from projetpaques2018.views import nouvel_avion, employe_page, nouveau_vol, tableau_de_bord_employe
+
+# Passagers views
+from projetpaques2018.views import search, book, tableau_de_bord_passager, passager_page
 
 urlpatterns = [
     url(r'^$', bienvenue),
     url(r'^bienvenue/$', bienvenue),
-    url(r'^signup/$', signup),
-    url(r'^login/$', login),
-    url(r'^logout/$', logout),
-    url(r'^profil/$', show_profile),
-    url(r'^nouveau-trajet/$', nouveau_trajet),
-    url(r'^search/$', search),
+
+    # Employés url
+    url(r'^nouvel-avion', nouvel_avion),
+    url(r'^employe-page', employe_page),
+    url(r'^nouveau-vol', nouveau_vol),
+    url(r'^tableau-de-bord-employe', tableau_de_bord_employe),
+
+    # Passagers url
+    url(r'^passager-page', passager_page),
+    url(r'^search', search),
+    url(r'^book', book),
+    url(r'^tableau-de-bord-passager', tableau_de_bord_passager),
+
+    # urls communes aux 2 utilisateurs
+    url(r'^signup', signup),
+    url(r'^login', login),
+    url(r'^logout', logout),
+
+    url(r'^profil', show_profile),
     url(r'^modifier-profil/$', modify_profile),
-    url(r'^book/$', book),
     url(r'^voir-profil/$', voir_profil),
     url(r'^evaluer-conducteur/$', evaluer_conducteur),
     url(r'^chat-solvay/$', chat_solvay),
