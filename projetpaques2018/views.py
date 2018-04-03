@@ -489,16 +489,16 @@ def voir_profil(request):
         current_user = Utilisateur.objects.get(id=request.session['user_id'])
         user_to_show_id = request.GET['user_id']
         user_to_show = Utilisateur.objects.get(id = user_to_show_id)
-        ratings = RatingConducteur.objects.filter(trajet__in = Trajet.objects.filter(conducteur=user_to_show))
-        moyenne_proprete = 0
-        moyenne_ponctualite = 0
-        for r in ratings :
-            moyenne_proprete += int(r.proprete)
-            moyenne_ponctualite += int(r.ponctualite)
-        if len(ratings) > 0:
-            moyenne_proprete    = moyenne_proprete/len(ratings)
-            moyenne_ponctualite = moyenne_ponctualite/len(ratings)
-        return render(request, 'voir-profil.html', {'moyenne_proprete':moyenne_proprete,'moyenne_ponctualite':moyenne_ponctualite,"user_to_show": user_to_show, 'current_user':current_user})
+    #    ratings = RatingConducteur.objects.filter(trajet__in = Trajet.objects.filter(conducteur=user_to_show))
+    #    moyenne_proprete = 0
+    #    moyenne_ponctualite = 0
+    #    for r in ratings :
+    #        moyenne_proprete += int(r.proprete)
+    #        moyenne_ponctualite += int(r.ponctualite)
+    #    if len(ratings) > 0:
+    #        moyenne_proprete    = moyenne_proprete/len(ratings)
+    #        moyenne_ponctualite = moyenne_ponctualite/len(ratings)
+        return render(request, 'voir-profil.html', {"user_to_show": user_to_show, 'current_user':current_user})
     else :
         return HttpResponseRedirect('/login')
 
