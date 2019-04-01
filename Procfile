@@ -1,3 +1,2 @@
-web: gunicorn projetpaques2018.wsgi:application --log-file --preload --workers 1 -
-
+web: gunicorn projetpaques2018.wsgi --log-file -
 
