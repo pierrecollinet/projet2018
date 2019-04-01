@@ -498,7 +498,7 @@ def voir_profil(request):
     #    if len(ratings) > 0:
     #        moyenne_proprete    = moyenne_proprete/len(ratings)
     #        moyenne_ponctualite = moyenne_ponctualite/len(ratings)
-        return render(request, 'voir-profil.html', {"user_to_show": user_to_show, 'current_user':current_user})
+        return render(request, 'voir-profil.html', {$"user_to_show": user_to_show, 'current_user':current_user})
     else :
         return HttpResponseRedirect('/login')
 

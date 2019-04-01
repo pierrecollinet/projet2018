@@ -15,8 +15,8 @@ import sys
 from django.core.wsgi import get_wsgi_application
 
 
-# reload(sys)
-# sys.setdefaultencoding("utf-8")
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "projetpaques2018.settings")
