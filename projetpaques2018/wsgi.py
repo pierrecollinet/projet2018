@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 import os
 import sys
 
-
+from importlib import reload
 
 from django.core.wsgi import get_wsgi_application
 
@@ -21,4 +21,5 @@ sys.setdefaultencoding("utf-8")
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "projetpaques2018.settings")
 application = get_wsgi_application()
+
 
