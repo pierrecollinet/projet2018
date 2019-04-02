@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} Voir le profil{% endblock %}
+
+
+{% block content %}
+<div class="container">
+  <div class="col-xs-12 col-md-6 col-md-offset-3 solid-box">
+    <h1>Téléchargement - Documents utiles</h1>
+
+
+    <ul class="text-left">
+        <b>Télécharger les notes de cours : </b>
+        <li><a href="{% static 'files/coursI.pptx' %}" target="_blank">Cours I - Rappel Python</a></li>
+        <li><a href="{% static 'files/coursII.pptx' %}" target="_blank">Cours II - HTML & CSS</a></li>
+        <li><a href="{% static 'files/coursIII.pptx' %}" target="_blank">Cours III - Base de données</a></li>
+        <li><a href="{% static 'files/coursIV.pptx' %}" target="_blank">Cours IV - Les formulaires</a></li>
+    </ul>
+
+    <ul class="text-left">
+        <b>Télécharger les codes des précédents projets : </b>
+        <li><a href="{% static 'files/projetpaques2018.zip' %}" target="_blank">Solvair - projet 2018.zip</a></li>
+        <li><a href="{% static 'files/blablacar1.zip' %}" target="_blank">Blablacar - projet 2018.zip</a></li>
+        <li><a href="{% static 'files/cours_blablacar.zip' %}" target="_blank">Cours récapitulatif - Blablacar.zip</a></
+    </ul>
+</div>
+
+
+{% endblock %}

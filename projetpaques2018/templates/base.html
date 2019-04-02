@@ -64,24 +64,21 @@
       <ul class="nav navbar-nav">
         <li><a href="/search">Réserver un vol <span class="sr-only">(current)</span></a></li>
         <li><a href="/nouveau-vol">Proposer un vol </a></li>
-        <li class="dropdown btn btn-success ">
-          <a href="#" style="color:white;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blocus Assistance <span class="caret"></span></a>
+        <li class="dropdown">
+          <a href="#" style="color:white;" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><button class="btn btn-info">Blocus Assistance <span class="caret"></span></button></a>
           <ul class="dropdown-menu">
             <li><a target="_blank" href="http://www.blocusassistance.be/">C'est quoi ?</a></li>
-            <li><a target="_blank" href="http://www.blocusassistance.be/django-module/inscription">Aide en Python/Django</a></li>
+            <li><a target="_blank" href="https://www.blocusassistance.be/cours/detail-cours/39/">Aide en Python/Django</a></li>
             <li role="separator" class="divider"></li>
-            <li><a target="_blank" href="http://www.blocusassistance.be/universite/programme-blocus-assiste">Aide en blocus</a></li>
+            <li><a target="_blank" href="https://www.blocusassistance.be/blocus-assiste/programme">Aide en blocus</a></li>
           </ul>
         </li>
+        <li><a href="/codes-et-ressources"><button class="btn btn-success">Codes et Ressources</button></a></li>
+        <li><a href="https://www.blocusassistance.be/cours/detail-cours/39/"><button class="btn btn-danger">Aide stage de Pâques</button></a></li>
 
 
       </ul>
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Chercher...">
-        </div>
-        <a class="btn btn-default">Go</a>
-      </form>
+
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/chat-solvay">Chat Solvay <span class="sr-only">(current)</span></a></li>
         {% if current_user %}

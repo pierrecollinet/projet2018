@@ -27,7 +27,7 @@ from projetpaques2018.views import bienvenue, signup, login, logout,    show_pro
 from projetpaques2018.views import nouvel_avion, employe_page, nouveau_vol, tableau_de_bord_employe
 
 # Passagers views
-from projetpaques2018.views import search, book, tableau_de_bord_passager, passager_page
+from projetpaques2018.views import search, book, tableau_de_bord_passager, passager_page, code_ressource
 
 urlpatterns = [
     url(r'^$', bienvenue),
@@ -58,6 +58,7 @@ urlpatterns = [
     url(r'^like/$', like),
     url(r'^change-mdp/$', change_mdp),
     url(r'^voir-ratings/$', voir_ratings),
+    url(r'^codes-et-ressources/$', code_ressource),
 
     url(r'^admin/', include(admin.site.urls)),
 

@@ -571,3 +571,12 @@ def voir_ratings(request):
         return render(request, 'voir-ratings.html', {'current_user':current_user,'mes_erreurs':errors, 'ratings':ratings})
     else :
         return HttpResponseRedirect('/login')
+
+def code_ressource(request):
+    return render (request, "code_ressource.html", {})
+
+
+
+
+
+
