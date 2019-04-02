@@ -62,8 +62,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="/search">Réserver un vol <span class="sr-only">(current)</span></a></li>
-        <li><a href="/nouveau-vol">Proposer un vol </a></li>
+
         <li class="dropdown">
           <a href="#" style="color:white;" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><button class="btn btn-info">Blocus Assistance <span class="caret"></span></button></a>
           <ul class="dropdown-menu">
@@ -80,6 +79,9 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="/search">Réserver un vol <span class="sr-only">(current)</span></a></li>
+        <li><a href="/nouveau-vol">Proposer un vol </a></li>
+
         <li><a href="/chat-solvay">Chat Solvay <span class="sr-only">(current)</span></a></li>
         {% if current_user %}
         <li class="dropdown">
