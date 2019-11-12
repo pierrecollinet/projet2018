@@ -14,10 +14,10 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-PROJECT_ROOT = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
-BASE_DIR     = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
+BASE_DIR     = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-print("je suis en production !")
+print("je suis en local !!")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -27,7 +27,8 @@ SECRET_KEY = '5@nn0-(0j&t@=o!ie2x(9pwp%hu(ms74lh7$f&gjob3k4719cd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-print(DEBUG)
+ALLOWED_HOSTS = []
+
 
 # Application definition
 
@@ -54,7 +55,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 )
 
 ROOT_URLCONF = 'projetpaques2018.urls'
@@ -82,20 +82,12 @@ WSGI_APPLICATION = 'projetpaques2018.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DEBUG = True
-ALLOWED_HOSTS =  ['*']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
-# add this
-import dj_database_url
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
-DATABASES['default']['CONN_MAX_AGE'] = 500
 
 
 # Internationalization
@@ -115,19 +107,7 @@ DATE_INPUT_FORMATS = ['%d-%m-%Y']
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media")
-MEDIA_URL = "/media/"
-
-STATIC_ROOT = os.path.join(os.getcwd(), "staticfiles")
 STATIC_URL = '/static/'
-
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
+STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
 
 DEFAULT_CHARSET = 'utf-8'
-
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
